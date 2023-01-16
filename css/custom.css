@@ -1,0 +1,106 @@
+
+
+
+:root
+{
+    --bg-light-color: #f8f8f8;
+    --bg-dark-color: #010609;
+    --shadow-color: #141d38;
+    --dark-color: #050505;
+    --blue-color: #0080ff;
+    --pink-color: #ff006c;
+    --yellow-color: #f8e938;
+    --text-color: #999;
+    --heading-color: #888;
+    --white-color: #ffffff;
+    --green-color: #189251;
+    --green-light-color: #6ad39b;
+    --orange-color: #dc8b00;
+    --red-color: #ff0000;
+}
+
+body
+{
+    background-color: var(--bg-dark-color);
+    font-weight: 450;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    color: var(--green-color);
+}
+
+p
+{
+    color: var(--text-color);
+}
+
+hr
+{
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.bg-light-blur
+{
+    box-shadow: 0px 2px 4px 4px rgb(100, 100, 100, 0.15); 
+    background-color: rgba(255,255,255,0.72); 
+    backdrop-filter: saturate(180%) blur(20px);
+}
+
+.bg-dark-blur
+{
+    box-shadow: 0px 2px 4px 4px rgba(20, 29, 56, 0.50); 
+    background-color: rgba(5, 5, 5, 0.70); 
+    backdrop-filter: saturate(180%) blur(20px);
+}
+
+.mn
+{
+    color: var(--white-color);
+}
+
+.img
+{
+    width: 300px;
+    height: 300px;
+}
+
+.btn
+{
+    background-color: var(--dark-color);
+    border: 1px solid var(--dark-color);
+    box-shadow: 0px 2px 4px 4px rgba(20, 29, 56, 0.50);
+    width: 130px;
+    height: 36px;
+    border-radius: 3px;
+}
+
+.btn a
+{
+    line-height: 15px;
+    text-decoration: none;
+    color: var(--white-color);
+}
+
+.btn:hover
+{
+    background-color: var(--shadow-color);
+    border: 1px solid var(--shadow-color);
+}
+
+.link
+{
+    text-decoration: underline;
+    color: var(--green-color);
+}
+
+.link:hover
+{
+    color: var(--green-light-color);
+}
+
+.footer-text
+{
+    color: var(--text-color);
+}
