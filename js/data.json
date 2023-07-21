@@ -1,0 +1,58 @@
+[
+    {
+        "img": "../assests/projects/WindeployQt.png",
+        "title": "WindeployQt",
+        "discription": "A GUI Application for deploying Qt based applications to microsoft windows.",
+        "url": "https://github.com/uxlabspk/WindeployQt",
+        "tag": "C++, Windows"
+    }, 
+    {
+        "img": "../assests/projects/NotePad.png",
+        "title": "QNotePad",
+        "discription": "A notepad application base on Qt framework compatible with windows, macOS and Linux.",
+        "url": "https://github.com/uxlabspk/QNotepad",
+        "tag": "C++"
+    }, 
+    {
+        "img": "../assests/projects/btn_Css_view1.png",
+        "title": "Button CSS Generator",
+        "discription": "A GUI Application for generating css code for buttons.",
+        "url": "https://github.com/uxlabspk/BtnGenerator",
+        "tag": "C++"
+    }, 
+    {
+        "img": "../assests/projects/BMI_View1.png",
+        "title": "BMI Calculator",
+        "discription": "A GUI Application for calculating BMI of the user.",
+        "url": "https://github.com/uxlabspk/BMI",
+        "tag": "C++"
+    }, 
+    {
+        "img": "../assests/projects/ebook-java.png",
+        "title": "Java Guide",
+        "discription": "The Essential Programming Concepts In Java For Beginners.",
+        "url": "https://github.com/uxlabspk/ebooks/java.pdf",
+        "tag": "Java, Guides"
+    },
+    {
+        "img": "../assests/projects/colorlabs.png",
+        "title": "Color Lab",
+        "discription": "A Vanilla JS based project to generate random colors for Web Developers and UI Designers.",
+        "url": "https://github.com/uxlabspk/colorlab/",
+        "tag": "Bootstrap5, Vanilla JS"
+    },
+    {
+        "img": "../assests/projects/portfolio.png",
+        "title": "Portfolio",
+        "discription": "A Bootstrap5 based single webpage to show case your skills.",
+        "url": "https://github.com/uxlabspk/portfolio/",
+        "tag": "Bootstrap5, CSS3"
+    },
+    {
+        "img": "../assests/projects/Codehunts.png",
+        "title": "Code Hunts",
+        "discription": "A Bootstrap5 and SCSS based website for a software development company startup.",
+        "url": "https://uxlabspk.github.io/codehunts/",
+        "tag": "SCSS, Firebase"
+    }
+]
