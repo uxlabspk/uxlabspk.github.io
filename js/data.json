@@ -52,7 +52,7 @@
         "img": "../assests/projects/Codehunts.png",
         "title": "Code Hunts",
         "discription": "A Bootstrap5 and SCSS based website for a software development company startup.",
-        "url": "https://uxlabspk.github.io/codehunts/",
+        "url": "https://github.com/codehunts/",
         "tag": "SCSS, Firebase"
     }
 ]
