@@ -12,9 +12,9 @@ layout: default
   </header>
   <div class="post-content">
     {% assign course_topics = site.courses | where: "parent_course", page.title
-    | sort: "order" %} {% if course_topics.size > 0 %} {% endif %} {{ content }}
-    <section class="course-topics">
-      <h2>Topics</h2>
+    | sort: "order" %} {{ content }} {% if course_topics.size > 0 %}
+    <section class="course-topics" style="margin-top: 30px">
+      <h2>Content</h2>
       <ul class="entry-list">
         {% for topic in course_topics %}
         <li>
@@ -28,6 +28,7 @@ layout: default
         {% endfor %}
       </ul>
     </section>
+    {% endif %}
   </div>
 </article>
 

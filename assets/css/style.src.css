@@ -211,7 +211,7 @@
   }
 
   .page-intro {
-    @apply max-w-[720px] pb-14 border-b border-line;
+    @apply pb-14 border-b border-line;
   }
   .page-intro h1 {
     font-size: clamp(2.6rem, 6vw, 4.5rem);
@@ -223,7 +223,7 @@
     @apply mb-10;
   }
   .post-content {
-    @apply max-w-[720px];
+    @apply w-full;
   }
   .post-content a,
   .page-intro a {

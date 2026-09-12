@@ -6,6 +6,8 @@ github_username: uxlabspk
 
 # Markdown / build settings
 markdown: kramdown
+kramdown:
+  parse_block_html: true
 permalink: /blog/:year/:month/:day/:title/
 
 collections:
