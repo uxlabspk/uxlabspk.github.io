@@ -225,6 +225,9 @@
   .post-content {
     @apply w-full;
   }
+  .post-content h2 {
+    margin-top: 30px;
+  }
   .post-content a,
   .page-intro a {
     @apply text-orange;

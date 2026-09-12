@@ -1,6 +1,9 @@
 ---
 title: "C++ Overview"
 topic: true
+parent_course: "Operating System"
+parent_url: "/courses/operating-systems/"
+order: 1
 summary: "Essential C++ concepts: variables, control structures, STL, OOP, threading, and debugging."
 ---
 
@@ -28,17 +31,15 @@ A practical C++ field guide. You will move from values in memory to objects and 
 
 Read each section in two passes: first for the concept, then for a real example. After every code sample, change one value, add one case, or break one assumption. That small experiment is where the syntax becomes intuition.
 
----
-
 ## 01 / Variables and Basic Types
 
 C++ gives you direct access to memory and types that map closely to hardware. Knowing the size and behavior of each type is the foundation for everything else.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Core types** — `int`, `float`, `double`, `char`, `bool`  
-**Constants** — `const` for values that must not change at runtime  
-**I/O** — `cin` / `cout` with formatters like `setw`, `setprecision`, `fixed`
+<strong>Core types</strong> — <code>int</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>bool</code><br>
+<strong>Constants</strong> — <code>const</code> for values that must not change at runtime<br>
+<strong>I/O</strong> — <code>cin</code> / <code>cout</code> with formatters like <code>setw</code>, <code>setprecision</code>, <code>fixed</code>
 
 </div>
 
@@ -68,9 +69,9 @@ Conditionals and loops are how a program makes decisions and repeats work. The p
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Decision making** — `if` / `else if` / `else`, `switch`  
-**Loops** — `for`, `while`, `do-while`  
-**Control** — `break` exits the loop, `continue` skips to the next iteration
+<strong>Decision making</strong> — <code>if</code> / <code>else if</code> / <code>else</code>, <code>switch</code><br>
+<strong>Loops</strong> — <code>for</code>, <code>while</code>, <code>do-while</code><br>
+<strong>Control</strong> — <code>break</code> exits the loop, <code>continue</code> skips to the next iteration
 
 </div>
 
@@ -123,9 +124,9 @@ Functions are how you turn a monolithic program into composable pieces. Write fu
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Pass by value** — copies the argument, safe but slower for large data  
-**Pass by reference** — `const &` avoids copies while preventing modification  
-**Default arguments** — optional parameters with fallback values
+<strong>Pass by value</strong> — copies the argument, safe but slower for large data<br>
+<strong>Pass by reference</strong> — <code>const &amp;</code> avoids copies while preventing modification<br>
+<strong>Default arguments</strong> — optional parameters with fallback values
 
 </div>
 
@@ -152,10 +153,10 @@ Pointers give you direct access to memory addresses — the backbone of dynamic 
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Declare** — `int *ptr`  
-**Address-of** — `&variable` gets the memory address  
-**Dereference** — `*ptr` reads or writes the value at that address  
-**Reference** — `int &ref = variable`, an alias that cannot be reseated
+<strong>Declare</strong> — <code>int *ptr</code><br>
+<strong>Address-of</strong> — <code>&amp;variable</code> gets the memory address<br>
+<strong>Dereference</strong> — <code>*ptr</code> reads or writes the value at that address<br>
+<strong>Reference</strong> — <code>int &amp;ref = variable</code>, an alias that cannot be reseated
 
 </div>
 
@@ -183,9 +184,9 @@ Structs group related data. Classes add methods and access control. Together the
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Structs** — public by default, best for plain data grouping  
-**Classes** — encapsulate data with `private` / `public` access  
-**Methods** — functions that belong to a type
+<strong>Structs</strong> — public by default, best for plain data grouping<br>
+<strong>Classes</strong> — encapsulate data with <code>private</code> / <code>public</code> access<br>
+<strong>Methods</strong> — functions that belong to a type
 
 </div>
 
@@ -216,9 +217,9 @@ Sometimes you need memory whose size or lifetime is not known at compile time. `
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Allocate** — `new Type` for single objects, `new Type[n]` for arrays  
-**Deallocate** — `delete` for single objects, `delete[]` for arrays  
-**Rule** — every `new` must have a matching `delete`
+<strong>Allocate</strong> — <code>new Type</code> for single objects, <code>new Type[n]</code> for arrays<br>
+<strong>Deallocate</strong> — <code>delete</code> for single objects, <code>delete[]</code> for arrays<br>
+<strong>Rule</strong> — every <code>new</code> must have a matching <code>delete</code>
 
 </div>
 
@@ -247,9 +248,9 @@ Programs read from and write to files to persist data. The `fstream` family give
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Streams** — `ifstream` (read), `ofstream` (write), `fstream` (both)  
-**Pattern** — open, read/write, close  
-**Check** — always verify `is_open()` before operating on a file
+<strong>Streams</strong> — <code>ifstream</code> (read), <code>ofstream</code> (write), <code>fstream</code> (both)<br>
+<strong>Pattern</strong> — open, read/write, close<br>
+<strong>Check</strong> — always verify <code>is_open()</code> before operating on a file
 
 </div>
 
@@ -277,9 +278,9 @@ The STL provides containers, algorithms, and iterators that save you from reimpl
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Containers** — `std::queue` (FIFO), `std::vector` (dynamic array), `std::map` (key-value)  
-**Algorithms** — `std::sort`, `std::find`, `std::for_each`  
-**Iterators** — pointer-like objects that connect algorithms to containers
+<strong>Containers</strong> — <code>std::queue</code> (FIFO), <code>std::vector</code> (dynamic array), <code>std::map</code> (key-value)<br>
+<strong>Algorithms</strong> — <code>std::sort</code>, <code>std::find</code>, <code>std::for_each</code><br>
+<strong>Iterators</strong> — pointer-like objects that connect algorithms to containers
 
 </div>
 
@@ -307,9 +308,9 @@ OOP lets you model complex systems as interacting objects. Use inheritance to sp
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Encapsulation** — hide implementation details behind a public interface  
-**Inheritance** — extend a base class with specialized behavior  
-**Polymorphism** — call the correct derived method through a base pointer using `virtual`
+<strong>Encapsulation</strong> — hide implementation details behind a public interface<br>
+<strong>Inheritance</strong> — extend a base class with specialized behavior<br>
+<strong>Polymorphism</strong> — call the correct derived method through a base pointer using <code>virtual</code>
 
 </div>
 
@@ -351,10 +352,10 @@ Many programs benefit from doing multiple things at once. C++11 introduced `std:
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Threads** — `std::thread` launches concurrent execution  
-**Join** — `t.join()` waits for a thread to finish  
-**Mutex** — `std::mutex` protects shared data from race conditions  
-**Condition variable** — `std::condition_variable` for thread signaling
+<strong>Threads</strong> — <code>std::thread</code> launches concurrent execution<br>
+<strong>Join</strong> — <code>t.join()</code> waits for a thread to finish<br>
+<strong>Mutex</strong> — <code>std::mutex</code> protects shared data from race conditions<br>
+<strong>Condition variable</strong> — <code>std::condition_variable</code> for thread signaling
 
 </div>
 
@@ -384,9 +385,9 @@ Input can be invalid. Files can go missing. Memory can run out. Exception handli
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Try / catch / throw** — the core mechanism  
-**Standard exceptions** — `invalid_argument`, `runtime_error`, `out_of_range`  
-**Custom exceptions** — extend `std::exception` for domain-specific errors
+<strong>Try / catch / throw</strong> — the core mechanism<br>
+<strong>Standard exceptions</strong> — <code>invalid_argument</code>, <code>runtime_error</code>, <code>out_of_range</code><br>
+<strong>Custom exceptions</strong> — extend <code>std::exception</code> for domain-specific errors
 
 </div>
 
@@ -420,9 +421,9 @@ Bugs are hard to reproduce and expensive to fix once code ships. Catch them earl
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
-**Compiler warnings** — enable `-Wall -Wextra`, treat warnings as errors  
-**Common bugs** — off-by-one errors, null pointer dereferences, uninitialized variables  
-**Assertions** — `assert()` catches logic errors at runtime during development
+<strong>Compiler warnings</strong> — enable <code>-Wall -Wextra</code>, treat warnings as errors<br>
+<strong>Common bugs</strong> — off-by-one errors, null pointer dereferences, uninitialized variables<br>
+<strong>Assertions</strong> — <code>assert()</code> catches logic errors at runtime during development
 
 </div>
 
