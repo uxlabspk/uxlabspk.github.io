@@ -242,6 +242,24 @@
   .post-content pre code {
     @apply bg-transparent;
   }
+  .post-content table {
+    @apply w-full border-collapse my-6;
+  }
+  .post-content thead {
+    @apply border-b-2;
+    border-color: var(--color-orange);
+  }
+  .post-content th {
+    @apply text-left py-3 px-4 font-semibold text-sm tracking-wide uppercase;
+    color: var(--color-orange);
+  }
+  .post-content td {
+    @apply py-3 px-4 text-sm;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .post-content tbody tr:hover {
+    background: var(--paper-deep);
+  }
   .back-link {
     @apply inline-block mt-12 text-orange text-xs font-bold no-underline;
   }

@@ -449,15 +449,53 @@ int main() {
 
 You now have the vocabulary to read a small C++ program: data has a type, work has a control path, memory has an owner, and concurrent work needs coordination. Keep this page nearby as a reference while you build.
 
-| Concept               | What to remember                                           |
-| --------------------- | ---------------------------------------------------------- |
-| **Types & variables** | Know your sizes, use `const` for constants                 |
-| **Control flow**      | `switch` for dispatch, `break`/`continue` for loop control |
-| **Vectors**           | Prefer `std::vector` over raw arrays                       |
-| **Functions**         | Use `const &` for large parameters                         |
-| **Pointers**          | Every `new` needs a `delete`                               |
-| **OOP**               | `virtual` for polymorphism, `private` for encapsulation    |
-| **STL**               | `queue`, `vector`, `sort` cover most everyday needs        |
-| **Threading**         | `std::thread` + `std::mutex` for concurrency               |
-| **Exceptions**        | Wrap risky operations in `try`/`catch`                     |
-| **Debugging**         | `-Wall`, `assert()`, initialize everything                 |
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>What to remember</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Types & variables</strong></td>
+      <td>Know your sizes, use <code>const</code> for constants</td>
+    </tr>
+    <tr>
+      <td><strong>Control flow</strong></td>
+      <td><code>switch</code> for dispatch, <code>break</code>/<code>continue</code> for loop control</td>
+    </tr>
+    <tr>
+      <td><strong>Vectors</strong></td>
+      <td>Prefer <code>std::vector</code> over raw arrays</td>
+    </tr>
+    <tr>
+      <td><strong>Functions</strong></td>
+      <td>Use <code>const &</code> for large parameters</td>
+    </tr>
+    <tr>
+      <td><strong>Pointers</strong></td>
+      <td>Every <code>new</code> needs a <code>delete</code></td>
+    </tr>
+    <tr>
+      <td><strong>OOP</strong></td>
+      <td><code>virtual</code> for polymorphism, <code>private</code> for encapsulation</td>
+    </tr>
+    <tr>
+      <td><strong>STL</strong></td>
+      <td><code>queue</code>, <code>vector</code>, <code>sort</code> cover most everyday needs</td>
+    </tr>
+    <tr>
+      <td><strong>Threading</strong></td>
+      <td><code>std::thread</code> + <code>std::mutex</code> for concurrency</td>
+    </tr>
+    <tr>
+      <td><strong>Exceptions</strong></td>
+      <td>Wrap risky operations in <code>try</code>/<code>catch</code></td>
+    </tr>
+    <tr>
+      <td><strong>Debugging</strong></td>
+      <td><code>-Wall</code>, <code>assert()</code>, initialize everything</td>
+    </tr>
+  </tbody>
+</table>
