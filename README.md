@@ -1,21 +1,28 @@
 # uxlabspk.github.io
 
-Personal site: CS journey blog, courses I teach, and projects. Built with Jekyll, hosted on GitHub Pages.
+Personal site: CS journey blog, courses I teach, and projects. Built with Jekyll + Tailwind CSS 4, hosted on GitHub Pages.
 
 ## Setup
 
-1. Edit `_config.yml` if the deployment URL changes
-2. Edit `about.md` as your profile evolves
-3. Add new content in `_posts/`, `_courses/`, and `_projects/`
+1. Install dependencies:
+   ```bash
+   bundle install
+   npm install
+   ```
+2. Edit `_config.yml` if the deployment URL changes
+3. Edit `about.md` as your profile evolves
+4. Add new content in `_posts/`, `_courses/`, and `_projects/`
 
 ## Run locally (optional but recommended)
 
 ```bash
-bundle install
+npm run watch:css &
 bundle exec jekyll serve
 ```
 
 Then visit `http://localhost:4000`.
+
+To build CSS once (without watching): `npm run build:css`
 
 ## Add content
 
