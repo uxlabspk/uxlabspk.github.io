@@ -1,19 +1,16 @@
 ---
 title: "C++ Overview"
 topic: true
-parent_course: "Operating System"
-parent_url: "/courses/operating-systems/"
-order: 1
-summary: "Essential C++ concepts for OS programming: variables, control structures, STL, OOP, threading, and debugging."
+summary: "Essential C++ concepts: variables, control structures, STL, OOP, threading, and debugging."
 ---
 
-A practical C++ field guide for operating systems work. You will move from values in memory to processes in motion, learning the language features behind schedulers, memory managers, file systems, and process trackers.
+A practical C++ field guide. You will move from values in memory to objects and programs in motion, learning the language features that make C++ fast, expressive, and close to the hardware.
 
 <div class="signal-grid">
 <div>
 <span class="signal-number">01 / Model</span>
 <strong>Think close to the machine</strong>
-<p>Types, pointers, and memory are not abstract details here. They are the material of the system.</p>
+<p>Types, pointers, and memory are not abstract details here. They are the material of the language.</p>
 </div>
 <div>
 <span class="signal-number">02 / Compose</span>
@@ -29,13 +26,13 @@ A practical C++ field guide for operating systems work. You will move from value
 
 ### How to use this guide
 
-Read each section in two passes: first for the concept, then for the OS connection. After every example, change one value, add one process, or break one assumption. That small experiment is where the syntax becomes intuition.
+Read each section in two passes: first for the concept, then for a real example. After every code sample, change one value, add one case, or break one assumption. That small experiment is where the syntax becomes intuition.
 
 ---
 
 ## 01 / Variables and Basic Types
 
-C++ gives you direct access to memory and types that map closely to hardware. For OS programming, you need to know the size and behavior of each type.
+C++ gives you direct access to memory and types that map closely to hardware. Knowing the size and behavior of each type is the foundation for everything else.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -51,13 +48,13 @@ C++ gives you direct access to memory and types that map closely to hardware. Fo
 using namespace std;
 
 int main() {
-    int processCount = 5;
-    double burstTime = 10.5;
-    const int MAX_PROCESSES = 100;
+    int itemCount = 5;
+    double price = 10.5;
+    const double TAX_RATE = 0.08;
 
-    cout << "Process Count: " << processCount << endl;
-    cout << "Burst Time: " << fixed << setprecision(1) << burstTime << endl;
-    cout << "Max Processes: " << MAX_PROCESSES << endl;
+    cout << "Item Count: " << itemCount << endl;
+    cout << "Price: " << fixed << setprecision(2) << price << endl;
+    cout << "Tax Rate: " << TAX_RATE << endl;
 
     return 0;
 }
@@ -67,7 +64,7 @@ int main() {
 
 ## 02 / Control Structures
 
-Every scheduler, memory allocator, and device driver relies on conditionals and loops. The patterns here — especially `switch` and loop control — show up constantly in OS code.
+Conditionals and loops are how a program makes decisions and repeats work. The patterns here — especially `switch` and loop control — show up constantly in everyday C++ code.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -82,13 +79,13 @@ Every scheduler, memory allocator, and device driver relies on conditionals and 
 using namespace std;
 
 int main() {
-    int processes[] = {1, 2, 3, 4, 5};
+    int scores[] = {85, 42, 91, 67, 78};
     for (int i = 0; i < 5; ++i) {
-        if (processes[i] == 3) {
-            cout << "Process 3 found! Skipping..." << endl;
+        if (scores[i] < 50) {
+            cout << "Score " << scores[i] << " failed. Skipping..." << endl;
             continue;
         }
-        cout << "Scheduling Process: " << processes[i] << endl;
+        cout << "Score " << scores[i] << " passed." << endl;
     }
     return 0;
 }
@@ -98,7 +95,7 @@ int main() {
 
 ## 03 / Arrays and Vectors
 
-Fixed-size arrays are simple but rigid. `std::vector` grows dynamically — essential when you do not know how many processes or threads will exist at runtime.
+Fixed-size arrays are simple but rigid. `std::vector` grows dynamically — essential when you do not know how many items you will need to store at runtime.
 
 **Static arrays** — `int arr[10]`, fixed at compile time  
 **Dynamic vectors** — `std::vector<T>`, resizes as needed  
@@ -110,9 +107,9 @@ Fixed-size arrays are simple but rigid. `std::vector` grows dynamically — esse
 using namespace std;
 
 int main() {
-    vector<double> burstTimes = {10.5, 5.2, 8.9, 3.1};
-    for (double time : burstTimes) {
-        cout << "Burst Time: " << time << endl;
+    vector<double> prices = {10.5, 5.2, 8.9, 3.1};
+    for (double price : prices) {
+        cout << "Price: $" << price << endl;
     }
     return 0;
 }
@@ -122,7 +119,7 @@ int main() {
 
 ## 04 / Functions
 
-Functions are how you turn a monolithic program into composable pieces. For OS work, you will write functions to calculate waiting times, manage queues, and wrap system calls.
+Functions are how you turn a monolithic program into composable pieces. Write functions to calculate totals, validate input, and wrap repeated logic.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -136,13 +133,13 @@ Functions are how you turn a monolithic program into composable pieces. For OS w
 #include <iostream>
 using namespace std;
 
-int calculateWaitingTime(int burstTime, int arrivalTime = 0) {
-    return burstTime - arrivalTime;
+double calculateTotal(double price, double taxRate = 0.08) {
+    return price + (price * taxRate);
 }
 
 int main() {
-    int waitingTime = calculateWaitingTime(10, 2);
-    cout << "Waiting Time: " << waitingTime << endl;
+    double total = calculateTotal(50.0);
+    cout << "Total: $" << total << endl;
     return 0;
 }
 ```
@@ -151,7 +148,7 @@ int main() {
 
 ## 05 / Pointers and References
 
-Pointers are the backbone of OS programming — every system call, memory allocation, and data structure passes data through them. References offer the same power with less risk.
+Pointers give you direct access to memory addresses — the backbone of dynamic data structures and efficient parameter passing. References offer the same power with less risk.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -166,14 +163,14 @@ Pointers are the backbone of OS programming — every system call, memory alloca
 #include <iostream>
 using namespace std;
 
-void modifyValue(int *ptr) {
-    *ptr = 20;
+void applyDiscount(double *price) {
+    *price = *price * 0.9;
 }
 
 int main() {
-    int value = 10;
-    modifyValue(&value);
-    cout << "Modified Value: " << value << endl;
+    double price = 100.0;
+    applyDiscount(&price);
+    cout << "Discounted Price: $" << price << endl;
     return 0;
 }
 ```
@@ -182,7 +179,7 @@ int main() {
 
 ## 06 / Structs and Classes
 
-Structs group related data. Classes add methods and access control. Together they let you model OS entities — processes, threads, memory blocks — as coherent units instead of scattered variables.
+Structs group related data. Classes add methods and access control. Together they let you model real-world entities — students, accounts, products — as coherent units instead of scattered variables.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -196,17 +193,17 @@ Structs group related data. Classes add methods and access control. Together the
 #include <iostream>
 using namespace std;
 
-struct Process {
-    int pid;
-    double burstTime;
+struct Student {
+    int id;
+    double gpa;
     void display() {
-        cout << "PID: " << pid << ", Burst Time: " << burstTime << endl;
+        cout << "ID: " << id << ", GPA: " << gpa << endl;
     }
 };
 
 int main() {
-    Process p1 = {1, 10.5};
-    p1.display();
+    Student s1 = {1, 3.8};
+    s1.display();
     return 0;
 }
 ```
@@ -215,7 +212,7 @@ int main() {
 
 ## 07 / Dynamic Memory Allocation
 
-OS kernels allocate and free memory constantly. In C++, `new` and `delete` give you that control. Mismatch them and you get leaks or dangling pointers — two of the most common bugs in systems code.
+Sometimes you need memory whose size or lifetime is not known at compile time. `new` and `delete` give you that control. Mismatch them and you get leaks or dangling pointers — two of the most common bugs in C++ programs.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -230,14 +227,14 @@ OS kernels allocate and free memory constantly. In C++, `new` and `delete` give 
 using namespace std;
 
 int main() {
-    int *arr = new int[5];
+    int *scores = new int[5];
     for (int i = 0; i < 5; ++i) {
-        arr[i] = i * 10;
+        scores[i] = i * 10;
     }
     for (int i = 0; i < 5; ++i) {
-        cout << arr[i] << " ";
+        cout << scores[i] << " ";
     }
-    delete[] arr;
+    delete[] scores;
     return 0;
 }
 ```
@@ -246,7 +243,7 @@ int main() {
 
 ## 08 / File I/O
 
-Processes read from and write to files. The `fstream` family gives you the same stream interface as `cin` / `cout`, making file operations straightforward.
+Programs read from and write to files to persist data. The `fstream` family gives you the same stream interface as `cin` / `cout`, making file operations straightforward.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -262,10 +259,10 @@ Processes read from and write to files. The `fstream` family gives you the same 
 using namespace std;
 
 int main() {
-    ofstream outFile("processes.txt");
+    ofstream outFile("students.txt");
     if (outFile.is_open()) {
-        outFile << "Process 1: PID=1, Burst Time=10.5\n";
-        outFile << "Process 2: PID=2, Burst Time=5.2\n";
+        outFile << "Student 1: ID=1, GPA=3.8\n";
+        outFile << "Student 2: ID=2, GPA=3.5\n";
         outFile.close();
     }
     return 0;
@@ -276,7 +273,7 @@ int main() {
 
 ## 09 / STL — Standard Template Library
 
-The STL provides containers, algorithms, and iterators that save you from reimplementing common patterns. For OS work, `queue`, `vector`, and `sort` cover most scheduling and bookkeeping needs.
+The STL provides containers, algorithms, and iterators that save you from reimplementing common patterns. `vector`, `map`, and `sort` cover most everyday data-handling needs.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -293,10 +290,10 @@ The STL provides containers, algorithms, and iterators that save you from reimpl
 using namespace std;
 
 int main() {
-    vector<int> pids = {3, 1, 4, 2};
-    sort(pids.begin(), pids.end());
-    for (int pid : pids) {
-        cout << pid << " ";
+    vector<int> ages = {34, 21, 45, 19};
+    sort(ages.begin(), ages.end());
+    for (int age : ages) {
+        cout << age << " ";
     }
     return 0;
 }
@@ -306,7 +303,7 @@ int main() {
 
 ## 10 / Object-Oriented Programming
 
-OOP lets you model complex systems as interacting objects. In OS code, you will use inheritance to specialize process types, polymorphism to swap scheduling algorithms, and encapsulation to protect internal state.
+OOP lets you model complex systems as interacting objects. Use inheritance to specialize types, polymorphism to swap behavior, and encapsulation to protect internal state.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -320,28 +317,28 @@ OOP lets you model complex systems as interacting objects. In OS code, you will 
 #include <iostream>
 using namespace std;
 
-class Process {
+class Shape {
 private:
-    int pid;
+    string name;
 public:
-    Process(int id) : pid(id) {}
-    virtual void schedule() {
-        cout << "Scheduling Process: " << pid << endl;
+    Shape(string n) : name(n) {}
+    virtual void describe() {
+        cout << "Shape: " << name << endl;
     }
 };
 
-class RealProcess : public Process {
+class Circle : public Shape {
 public:
-    RealProcess(int id) : Process(id) {}
-    void schedule() override {
-        cout << "Scheduling Real Process: " << endl;
+    Circle() : Shape("Circle") {}
+    void describe() override {
+        cout << "A round shape with no corners." << endl;
     }
 };
 
 int main() {
-    Process *p = new RealProcess(1);
-    p->schedule();
-    delete p;
+    Shape *s = new Circle();
+    s->describe();
+    delete s;
     return 0;
 }
 ```
@@ -350,7 +347,7 @@ int main() {
 
 ## 11 / Threading and Concurrency
 
-Modern operating systems run many tasks in parallel. C++11 introduced `std::thread` and synchronization primitives so you can write concurrent code without dropping to platform-specific APIs.
+Many programs benefit from doing multiple things at once. C++11 introduced `std::thread` and synchronization primitives so you can write concurrent code without dropping to platform-specific APIs.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -366,13 +363,13 @@ Modern operating systems run many tasks in parallel. C++11 introduced `std::thre
 #include <thread>
 using namespace std;
 
-void scheduleProcess(int pid) {
-    cout << "Scheduling Process: " << pid << endl;
+void printMessage(string msg) {
+    cout << "Message: " << msg << endl;
 }
 
 int main() {
-    thread t1(scheduleProcess, 1);
-    thread t2(scheduleProcess, 2);
+    thread t1(printMessage, "Hello from thread 1");
+    thread t2(printMessage, "Hello from thread 2");
     t1.join();
     t2.join();
     return 0;
@@ -383,7 +380,7 @@ int main() {
 
 ## 12 / Exception Handling
 
-System calls fail. Files disappear. Memory runs out. Exception handling gives you a structured way to respond to errors instead of checking return codes everywhere.
+Input can be invalid. Files can go missing. Memory can run out. Exception handling gives you a structured way to respond to errors instead of checking return codes everywhere.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -398,16 +395,16 @@ System calls fail. Files disappear. Memory runs out. Exception handling gives yo
 #include <stdexcept>
 using namespace std;
 
-void validatePID(int pid) {
-    if (pid <= 0) {
-        throw invalid_argument("Invalid PID");
+void validateAge(int age) {
+    if (age <= 0) {
+        throw invalid_argument("Invalid age");
     }
-    cout << "Valid PID: " << pid << endl;
+    cout << "Valid age: " << age << endl;
 }
 
 int main() {
     try {
-        validatePID(-1);
+        validateAge(-5);
     } catch (const invalid_argument &e) {
         cerr << "Error: " << e.what() << endl;
     }
@@ -419,7 +416,7 @@ int main() {
 
 ## 13 / Debugging and Testing
 
-Bugs in systems code are hard to reproduce and expensive to fix. Catch them early with compiler warnings, assertions, and systematic testing.
+Bugs are hard to reproduce and expensive to fix once code ships. Catch them early with compiler warnings, assertions, and systematic testing.
 
 <div style="border-left: 3px solid var(--color-orange); padding: 0.75rem 1rem; margin: 1.5rem 0; background: var(--paper-deep);">
 
@@ -434,12 +431,12 @@ Bugs in systems code are hard to reproduce and expensive to fix. Catch them earl
 #include <cassert>
 using namespace std;
 
-int calculateWaitingTime(int burstTime, int arrivalTime) {
-    return burstTime - arrivalTime;
+double calculateTotal(double price, double taxRate) {
+    return price + (price * taxRate);
 }
 
 int main() {
-    assert(calculateWaitingTime(10, 2) == 8);
+    assert(calculateTotal(100.0, 0.1) == 110.0);
     cout << "Test passed!" << endl;
     return 0;
 }
@@ -449,7 +446,7 @@ int main() {
 
 ## 14 / Summary
 
-You now have the vocabulary to read a small systems program: data has a type, work has a control path, memory has an owner, and concurrent work needs coordination. Keep this page nearby while you start the operating-system projects that follow.
+You now have the vocabulary to read a small C++ program: data has a type, work has a control path, memory has an owner, and concurrent work needs coordination. Keep this page nearby as a reference while you build.
 
 | Concept               | What to remember                                           |
 | --------------------- | ---------------------------------------------------------- |
@@ -459,7 +456,7 @@ You now have the vocabulary to read a small systems program: data has a type, wo
 | **Functions**         | Use `const &` for large parameters                         |
 | **Pointers**          | Every `new` needs a `delete`                               |
 | **OOP**               | `virtual` for polymorphism, `private` for encapsulation    |
-| **STL**               | `queue`, `vector`, `sort` cover most OS needs              |
+| **STL**               | `queue`, `vector`, `sort` cover most everyday needs        |
 | **Threading**         | `std::thread` + `std::mutex` for concurrency               |
 | **Exceptions**        | Wrap risky operations in `try`/`catch`                     |
 | **Debugging**         | `-Wall`, `assert()`, initialize everything                 |
