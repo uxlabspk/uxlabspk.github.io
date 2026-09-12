@@ -1,0 +1,11 @@
+{
+  "name": "uxlabspk-github-io",
+  "private": true,
+  "scripts": {
+    "build:css": "npx @tailwindcss/cli -i assets/css/style.src.css -o assets/css/style.css --minify",
+    "watch:css": "npx @tailwindcss/cli -i assets/css/style.src.css -o assets/css/style.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.12"
+  }
+}
