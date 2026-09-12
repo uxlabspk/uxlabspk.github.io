@@ -1,0 +1,47 @@
+title: Muhammad Naveed
+description: Software Engineer and AI Researcher building intelligent systems for better human-computer interaction.
+url: "https://uxlabspk.github.io"
+baseurl: ""
+github_username: uxlabspk
+
+# Markdown / build settings
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title/
+
+collections:
+  courses:
+    output: true
+    permalink: /courses/:path/
+  projects:
+    output: true
+    permalink: /projects/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: courses
+    values:
+      layout: course
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

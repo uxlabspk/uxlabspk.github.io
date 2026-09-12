@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+<article class="course">
+  <header class="post-header">
+    <h1>{{ page.title }}</h1>
+    <p class="post-meta">
+      {% if page.term %}{{ page.term }}{% endif %} {% if page.level %} · {{
+      page.level }}{% endif %}
+    </p>
+  </header>
+  <div class="post-content">{{ content }}</div>
+</article>
+
+<a class="back-link" href="{{ '/courses/' | relative_url }}"
+  >Back to all courses <span aria-hidden="true">↖</span></a
+>
