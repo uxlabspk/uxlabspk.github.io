@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Operating System · Your Name</title>
+  <title>Processes and Threads · Your Name</title>
   <meta name="description" content="My CS journey — thoughts, courses I teach, and projects I build">
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="alternate" type="application/rss+xml" title="Your Name" href="/feed.xml">
@@ -26,43 +26,40 @@
   <main class="container">
     <article class="course">
   <header class="post-header">
-    <h1>Operating System</h1>
+    <h1>Processes and Threads</h1>
     <p class="post-meta">
-      Fall 2026  · Undergraduate
+       
     </p>
   </header>
   <div class="post-content">
-      <p>An exploration of the ideas that make modern computing possible: processes, memory, files, concurrency, and the relationship between hardware and software.</p>
+      <p>Processes and threads are the basic units an operating system uses to organize running work.</p>
 
-<h2 id="topics-covered">Topics covered</h2>
+<h2 id="processes">Processes</h2>
 
-<ul>
-  <li>Processes and threads</li>
-  <li>CPU scheduling and synchronization</li>
-  <li>Virtual memory and file systems</li>
-  <li>Systems calls and operating system structure</li>
-  <li>Protection, isolation, and performance</li>
-</ul>
+<p>A process is a running program together with its memory, resources, and current state. The operating system gives each process an isolated environment so one program cannot casually overwrite another program’s data.</p>
 
-<h2 id="resources">Resources</h2>
+<p>Typical process responsibilities include:</p>
 
 <ul>
-  <li>Syllabus: (link here)</li>
-  <li>Lecture notes: (link here)</li>
+  <li>Keeping track of the program’s current execution state</li>
+  <li>Allocating memory and other resources</li>
+  <li>Starting and stopping program execution</li>
+  <li>Providing a boundary for protection and isolation</li>
 </ul>
+
+<h2 id="threads">Threads</h2>
+
+<p>A thread is a path of execution inside a process. A process can contain one thread or several threads that share the process’s memory and resources.</p>
+
+<p>Multiple threads can make an application responsive and allow independent work to happen concurrently, but shared memory also means that threads must coordinate carefully.</p>
+
+<h2 id="key-idea">Key idea</h2>
+
+<p>The operating system schedules threads, while processes provide the protected containers that own resources. Understanding that distinction makes later topics such as scheduling, synchronization, and virtual memory easier to follow.</p>
 
     <section class="course-topics">
       <h2>Topics</h2>
       <ul class="entry-list">
-        
-        <li>
-          <h3>
-            <a href="/courses/operating-systems/processes-and-threads/">Processes and Threads</a>
-          </h3>
-          
-          <p class="entry-excerpt">How operating systems run multiple programs and manage work over time.</p>
-          
-        </li>
         
       </ul>
     </section>
@@ -70,8 +67,8 @@
 </article>
 
 
-<a class="back-link" href="/courses/"
-  >Back to all courses <span aria-hidden="true">↖</span></a
+<a class="back-link" href="/courses/operating-systems/"
+  >Back to Operating System <span aria-hidden="true">↖</span></a
 >
 
 

@@ -11,7 +11,7 @@ permalink: /courses/
 </div>
 
 <ul class="entry-list">
-  {% assign sorted_courses = site.courses | sort: "order" %}
+  {% assign sorted_courses = site.courses | where_exp: "course", "course.topic != true" | sort: "order" %}
   {% for course in sorted_courses %}
   <li>
     <h3>{% if course.link == false %}{{ course.title }}{% else %}<a href="{{ course.url | relative_url }}">{{ course.title }}</a>{% endif %}</h3>

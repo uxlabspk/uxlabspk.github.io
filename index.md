@@ -54,7 +54,7 @@ title: Home
     <a class="text-link" href="{{ '/courses/' | relative_url }}">View courses <span aria-hidden="true">↗</span></a>
   </div>
   <div>
-  {% assign sorted_courses = site.courses | sort: "order" %}
+  {% assign sorted_courses = site.courses | where_exp: "course", "course.topic != true" | sort: "order" %}
   <ul class="entry-list">
     {% for course in sorted_courses limit:3 %}
     <li>

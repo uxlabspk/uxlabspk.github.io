@@ -10,9 +10,33 @@ layout: default
       page.level }}{% endif %}
     </p>
   </header>
-  <div class="post-content">{{ content }}</div>
+  <div class="post-content">
+    {% assign course_topics = site.courses | where: "parent_course", page.title
+    | sort: "order" %} {% if course_topics.size > 0 %} {% endif %} {{ content }}
+    <section class="course-topics">
+      <h2>Topics</h2>
+      <ul class="entry-list">
+        {% for topic in course_topics %}
+        <li>
+          <h3>
+            <a href="{{ topic.url | relative_url }}">{{ topic.title }}</a>
+          </h3>
+          {% if topic.summary %}
+          <p class="entry-excerpt">{{ topic.summary }}</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
 </article>
 
+{% if page.topic and page.parent_url %}
+<a class="back-link" href="{{ page.parent_url | relative_url }}"
+  >Back to {{ page.parent_course }} <span aria-hidden="true">↖</span></a
+>
+{% else %}
 <a class="back-link" href="{{ '/courses/' | relative_url }}"
   >Back to all courses <span aria-hidden="true">↖</span></a
 >
+{% endif %}
