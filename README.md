@@ -1,6 +1,6 @@
 # uxlabspk.github.io
 
-Personal site: CS journey blog, courses I teach, and projects. Built with Jekyll + Tailwind CSS 4, hosted on GitHub Pages.
+Personal site: CS journey blog and projects. Built with Jekyll + Tailwind CSS 4, hosted on GitHub Pages.
 
 ## Setup
 
@@ -11,7 +11,7 @@ Personal site: CS journey blog, courses I teach, and projects. Built with Jekyll
    ```
 2. Edit `_config.yml` if the deployment URL changes
 3. Edit `about.md` as your profile evolves
-4. Add new content in `_posts/`, `_courses/`, and `_projects/`
+4. Add new content in `_posts/` and `_projects/`
 
 ## Run locally (optional but recommended)
 
@@ -32,14 +32,6 @@ To build CSS once (without watching): `npm run build:css`
   title: "Post Title"
   date: 2026-01-01
   tags: [tag1, tag2]
-  ---
-  ```
-- **Course**: add a file to `_courses/`:
-  ```yaml
-  ---
-  title: "Course Name"
-  term: "Spring 2027"
-  level: "Graduate"
   ---
   ```
 - **Project**: add a file to `_projects/`:

@@ -9,9 +9,6 @@ markdown: kramdown
 permalink: /blog/:year/:month/:day/:title/
 
 collections:
-  courses:
-    output: true
-    permalink: /courses/:path/
   projects:
     output: true
     permalink: /projects/:path/
@@ -22,11 +19,6 @@ defaults:
       type: posts
     values:
       layout: post
-  - scope:
-      path: ""
-      type: courses
-    values:
-      layout: course
   - scope:
       path: ""
       type: projects

@@ -23,7 +23,7 @@ title: Home
 <section class="signal-grid" aria-label="Areas of focus">
   <div><span class="signal-number">01</span><strong>Build</strong><p>Scalable software from mobile interfaces to backend systems.</p></div>
   <div><span class="signal-number">02</span><strong>Research</strong><p>Speech AI and LLMs that push human-computer interaction forward.</p></div>
-  <div><span class="signal-number">03</span><strong>Share</strong><p>Notes, courses, and practical ideas for the next builder.</p></div>
+  <div><span class="signal-number">03</span><strong>Share</strong><p>Notes and practical ideas for the next builder.</p></div>
 </section>
 
 <div class="home-section split-section">
@@ -40,26 +40,6 @@ title: Home
       <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
       <p class="entry-meta">{{ post.date | date: "%B %-d, %Y" }}</p>
       <p class="entry-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-    </li>
-    {% endfor %}
-  </ul>
-  </div>
-</div>
-
-<div class="home-section split-section course-section">
-  <div class="section-heading">
-    <p class="eyebrow">Teaching</p>
-    <h2>Foundations for curious minds</h2>
-    <p>Two courses for understanding what happens beneath the interface, from app architecture to the operating system itself.</p>
-    <a class="text-link" href="{{ '/courses/' | relative_url }}">View courses <span aria-hidden="true">↗</span></a>
-  </div>
-  <div>
-  {% assign sorted_courses = site.courses | where_exp: "course", "course.topic != true" | sort: "order" %}
-  <ul class="entry-list">
-    {% for course in sorted_courses limit:3 %}
-    <li>
-      <h3><a href="{{ course.url | relative_url }}">{{ course.title }}</a></h3>
-      <p class="entry-meta">{{ course.term }}{% if course.level %} · {{ course.level }}{% endif %}</p>
     </li>
     {% endfor %}
   </ul>

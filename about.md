@@ -15,7 +15,7 @@ permalink: /about/
 		<h2>Building with intent</h2>
 		<p>I work on scalable software, from mobile applications to backend systems, and I am currently exploring cloud architecture, system design, and DevOps.</p>
 		<p>My research interests sit closer to the human side of the stack: Speech AI, LLMs, and interfaces that make intelligent systems feel more useful, understandable, and personal.</p>
-		<p>This site is where I keep the trail visible: ideas from the notebook, courses in progress, and projects that became real enough to share.</p>
+		<p>This site is where I keep the trail visible: ideas from the notebook and projects that became real enough to share.</p>
 	</div>
 	<aside class="about-aside">
 		<p class="eyebrow">Currently curious about</p>
