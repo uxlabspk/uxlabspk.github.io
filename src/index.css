@@ -9,6 +9,13 @@
   --color-hair: #e2e3e7;
   --color-wash: #f1f2f4;
   --color-signal: #2f45ff;
+
+  /* Container: centered, max 1200px, with responsive side padding */
+  --container-padding: 1.25rem;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
 }
 
 @layer base {
