@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --color-paper: #fafafb;
+  --color-ink: #17181c;
+  --color-graphite: #5a5e66;
+  --color-hair: #e2e3e7;
+  --color-wash: #f1f2f4;
+  --color-signal: #2f45ff;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+}
