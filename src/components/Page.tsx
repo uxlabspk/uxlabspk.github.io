@@ -1,19 +1,17 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Container } from "./Container";
+import { Icon } from "./Icon";
 
-const BRAND =
-  "inline-flex items-center gap-3 font-display text-[14px] font-semibold tracking-[.28em] text-ink";
 const NAV_LINK =
-  "text-[15px] text-graphite transition-colors duration-150 hover:text-ink";
-const BTN_SM =
-  "inline-block cursor-pointer rounded-md bg-ink px-4 py-[9px] text-[14px] font-medium leading-[normal] text-white transition-colors duration-150 hover:bg-signal motion-reduce:transition-none";
+  "relative py-2 text-[14px] font-medium text-graphite transition-colors duration-200 hover:text-ink";
 
-function Logo({ className }: { className?: string }) {
+function LogoMark({ className = "" }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 28 30" aria-hidden="true">
-      <path d="M2 8 12 3v19L2 27z" fill="currentColor" opacity=".55" />
-      <path d="M14 1l12 5v18l-12 5z" fill="currentColor" />
+    <svg className={className} viewBox="0 0 34 34" fill="none" aria-hidden="true">
+      <path d="M3 10.5 14.5 5v22L3 32.5v-22Z" fill="currentColor" opacity=".46" />
+      <path d="M17 3 31 9v19l-14 6V3Z" fill="currentColor" />
+      <path d="M8 14v12" stroke="white" strokeOpacity=".55" strokeWidth="1.5" />
     </svg>
   );
 }
@@ -23,125 +21,107 @@ export function Page({ title, children }: { title: string; children: ReactNode }
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => { document.title = title; }, [title]);
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const isActive = (path: string) => pathname === path ? "text-ink font-medium" : "";
+  const isActive = (path: string) => pathname === path;
+  const navClass = (path: string) => `${NAV_LINK} ${isActive(path) ? "text-ink after:absolute after:inset-x-0 after:-bottom-[1px] after:h-[2px] after:bg-signal" : ""}`;
 
   return (
-    <div className="flex min-h-screen flex-col bg-paper font-sans leading-[1.6] text-ink">
-
-      {/* ── Header ── */}
-      <header className="sticky top-0 z-50 border-b border-hair bg-paper/95 backdrop-blur-sm">
-        <Container className="flex items-center justify-between py-5">
+    <div className="site-shell flex min-h-screen flex-col bg-paper font-sans text-ink">
+      <header className="site-header sticky top-0 z-50 border-b border-hair/80 bg-paper/90 backdrop-blur-xl">
+        <Container className="flex h-[76px] items-center justify-between">
           <Link
-            className={BRAND}
+            className="group inline-flex items-center gap-3 font-display text-[13px] font-semibold tracking-[.22em] text-ink"
             to="/"
             onClick={() => window.scrollTo(0, 0)}
             aria-label="Immersyn home"
           >
-            <Logo className="h-6 w-[22px]" />
+            <LogoMark className="h-[31px] w-[31px] transition-transform duration-300 group-hover:rotate-[-5deg]" />
             <span>IMMERSYN</span>
           </Link>
 
-          {/* Desktop nav */}
-          <nav aria-label="Main" className="hidden items-center gap-7 min-[820px]:flex">
+          <nav aria-label="Main" className="hidden items-center gap-8 min-[820px]:flex">
             <a href="/#why" className={NAV_LINK}>Why small</a>
-            <a href="/#watch" className={NAV_LINK}>Watch</a>
-            <Link to="/about" className={`${NAV_LINK} ${isActive("/about")}`}>About</Link>
-            <Link to="/contact" className={`${NAV_LINK} ${isActive("/contact")}`}>Contact</Link>
-            <a href="/#access" className={BTN_SM}>Get early access</a>
+            <a href="/#watch" className={NAV_LINK}>The idea</a>
+            <Link to="/about" className={navClass("/about")}>About</Link>
+            <Link to="/contact" className={navClass("/contact")}>Contact</Link>
+            <a href="/#access" className="button-primary button-primary--small ml-1">
+              Get early access <Icon name="arrow-up-right" className="h-4 w-4" />
+            </a>
           </nav>
 
-          {/* Mobile hamburger */}
           <button
             type="button"
-            className="flex flex-col items-center justify-center gap-[5px] min-[820px]:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full border border-hair text-ink transition-colors hover:border-ink min-[820px]:hidden"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((o) => !o)}
+            onClick={() => setMenuOpen((open) => !open)}
           >
-            <span className={`block h-[2px] w-6 bg-ink transition-transform duration-200 ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
-            <span className={`block h-[2px] w-6 bg-ink transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-[2px] w-6 bg-ink transition-transform duration-200 ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            <Icon name={menuOpen ? "close" : "menu"} className="h-5 w-5" />
           </button>
         </Container>
       </header>
 
-      {/* Mobile drawer */}
       {menuOpen && (
         <nav
           aria-label="Mobile"
-          className="fixed inset-0 top-[69px] z-40 flex flex-col gap-6 bg-paper px-8 py-10 text-[18px] min-[820px]:hidden"
+          className="fixed inset-x-0 bottom-0 top-[76px] z-40 flex flex-col gap-2 overflow-y-auto bg-paper px-6 py-8 min-[820px]:hidden"
         >
-          <a href="/#why" className="text-graphite hover:text-ink" onClick={() => setMenuOpen(false)}>Why small</a>
-          <a href="/#watch" className="text-graphite hover:text-ink" onClick={() => setMenuOpen(false)}>Watch</a>
-          <Link to="/about" className={`text-graphite hover:text-ink ${isActive("/about")}`}>About</Link>
-          <Link to="/contact" className={`text-graphite hover:text-ink ${isActive("/contact")}`}>Contact</Link>
-          <Link to="/privacy" className={`text-graphite hover:text-ink ${isActive("/privacy")}`}>Privacy</Link>
-          <div className="pt-2">
-            <a
-              href="/#access"
-              className="inline-block rounded-md bg-ink px-6 py-3 font-medium text-white hover:bg-signal"
-              onClick={() => setMenuOpen(false)}
-            >
-              Get early access
-            </a>
-          </div>
+          <a href="/#why" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Why small <Icon name="arrow-up-right" className="h-4 w-4" /></a>
+          <a href="/#watch" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>The idea <Icon name="arrow-up-right" className="h-4 w-4" /></a>
+          <Link to="/about" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>About <Icon name="arrow-up-right" className="h-4 w-4" /></Link>
+          <Link to="/contact" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Contact <Icon name="arrow-up-right" className="h-4 w-4" /></Link>
+          <Link to="/privacy" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>Privacy <Icon name="arrow-up-right" className="h-4 w-4" /></Link>
+          <a href="/#access" className="button-primary mt-5 justify-center" onClick={() => setMenuOpen(false)}>
+            Get early access <Icon name="arrow-up-right" className="h-4 w-4" />
+          </a>
         </nav>
       )}
 
       <main className="grow">{children}</main>
 
-      {/* ── Footer ── */}
-      <footer className="border-t border-hair bg-wash">
-        <Container className="py-12">
-          <div className="grid grid-cols-[1fr_auto_auto] gap-x-16 gap-y-8 max-[640px]:grid-cols-1">
-            {/* Brand col */}
+      <footer className="site-footer border-t border-hair bg-[#f1f1ee]">
+        <Container className="py-14 sm:py-[72px]">
+          <div className="grid grid-cols-[1.5fr_.65fr_.65fr] gap-12 max-[640px]:grid-cols-1 max-[640px]:gap-10">
             <div>
-              <span className={`${BRAND} mb-4 inline-flex`}>
-                <Logo className="h-6 w-[22px]" />
-                <span>IMMERSYN</span>
-              </span>
-              <p className="mt-3 max-w-[34ch] text-[14px] text-graphite">
-                AI research dedicated to making powerful models small enough to run
-                on your own device — private, offline, and yours.
+              <Link className="inline-flex items-center gap-3 font-display text-[13px] font-semibold tracking-[.22em] text-ink" to="/">
+                <LogoMark className="h-[31px] w-[31px]" /><span>IMMERSYN</span>
+              </Link>
+              <p className="mt-5 max-w-[36ch] text-[14px] text-graphite">
+                An independent AI research lab making powerful models small enough to run on your own device.
               </p>
+              <a className="mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-ink transition-colors hover:text-signal" href="mailto:hello@immersyn.ai">
+                hello@immersyn.ai <Icon name="arrow-up-right" className="h-4 w-4" />
+              </a>
             </div>
-
-            {/* Company links */}
             <div>
-              <p className="mb-4 text-[12px] font-semibold uppercase tracking-[.14em] text-graphite">Company</p>
-              <nav aria-label="Footer company" className="flex flex-col gap-3 text-[15px]">
-                <Link to="/about" className="text-graphite hover:text-ink">About</Link>
-                <Link to="/contact" className="text-graphite hover:text-ink">Contact</Link>
-                <Link to="/privacy" className="text-graphite hover:text-ink">Privacy</Link>
+              <p className="footer-label">Explore</p>
+              <nav aria-label="Footer company" className="flex flex-col gap-3 text-[14px]">
+                <Link to="/about" className="footer-link">About us</Link>
+                <Link to="/contact" className="footer-link">Get in touch</Link>
+                <Link to="/privacy" className="footer-link">Privacy policy</Link>
               </nav>
             </div>
-
-            {/* Product links */}
             <div>
-              <p className="mb-4 text-[12px] font-semibold uppercase tracking-[.14em] text-graphite">Product</p>
-              <nav aria-label="Footer product" className="flex flex-col gap-3 text-[15px]">
-                <a href="/#why" className="text-graphite hover:text-ink">Why small</a>
-                <a href="/#watch" className="text-graphite hover:text-ink">Watch intro</a>
-                <a href="/#access" className="text-graphite hover:text-ink">Early access</a>
+              <p className="footer-label">Discover</p>
+              <nav aria-label="Footer product" className="flex flex-col gap-3 text-[14px]">
+                <a href="/#why" className="footer-link">Why small</a>
+                <a href="/#watch" className="footer-link">Watch the intro</a>
+                <a href="/#access" className="footer-link">Early access</a>
               </nav>
             </div>
           </div>
         </Container>
-
-        <div className="border-t border-hair">
-          <Container className="flex flex-wrap items-center justify-between gap-3 py-5 text-[13px] text-graphite">
-            <span>© {new Date().getFullYear()} Immersyn. All rights reserved.</span>
-            <span>AI research. Small. On-device. For everyone.</span>
+        <div className="border-t border-hair/80">
+          <Container className="flex flex-wrap items-center justify-between gap-3 py-5 text-[12px] text-graphite">
+            <span>© {new Date().getFullYear()} Immersyn Research. All rights reserved.</span>
+            <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-signal" /> Independent research. Built with intention.</span>
           </Container>
         </div>
       </footer>
-
     </div>
   );
 }

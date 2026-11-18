@@ -2,282 +2,180 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { Page } from "../components/Page";
 import { Container } from "../components/Container";
+import { Icon, type IconName } from "../components/Icon";
 
-const DOTS = Array.from({ length: 28 * 11 }, (_, i) => i);
-
+const DOTS = Array.from({ length: 28 * 11 }, (_, index) => index);
 const PRINCIPLES = [
-  {
-    title: "Private.",
-    body: "Your prompts, files and results stay on your device. Nothing is sent anywhere to be answered.",
-  },
-  {
-    title: "Offline.",
-    body: "Models small enough to run where you are: on a plane, in a lab, with the Wi-Fi off.",
-  },
-  {
-    title: "Yours.",
-    body: "No data center to rent, no permission to ask for. The model runs on hardware you already own.",
-  },
+  { number: "01", title: "Private by nature", body: "Your prompts, files and results stay on your device. Nothing is sent away to be answered." },
+  { number: "02", title: "Ready offline", body: "Small enough to run wherever you are: in the field, on a plane, or with the Wi-Fi off." },
+  { number: "03", title: "Completely yours", body: "No data center to rent and no permission to ask for. It runs on hardware you already own." },
 ];
-
 const STEPS = [
-  {
-    num: "01",
-    title: "Download once.",
-    body: "Install the Immersyn app and pull a model to your machine — the same way you download any other file.",
-  },
-  {
-    num: "02",
-    title: "Open, don't connect.",
-    body: "Launch it without Wi-Fi, without a login, without anything leaving your device.",
-  },
-  {
-    num: "03",
-    title: "Work as normal.",
-    body: "Chat, summarise, generate and analyse. Every result stays local, in your files.",
-  },
+  { num: "01", title: "Download once.", body: "Install Immersyn and get a model on your machine, just like any other file." },
+  { num: "02", title: "Open, don't connect.", body: "Launch without Wi-Fi, without a login, and without sending anything anywhere." },
+  { num: "03", title: "Get to work.", body: "Chat, summarize, generate and analyze. Your work stays local, in your files." },
 ];
-
-const USE_CASES = [
-  { icon: "🔬", label: "Research",     text: "Analyse sensitive documents and data without letting them touch an external server." },
-  { icon: "✈️", label: "Travel",       text: "Full capability on a laptop in airplane mode. No connectivity required." },
-  { icon: "🏥", label: "Healthcare",   text: "Patient records never leave the building. Compliance by architecture, not by promise." },
-  { icon: "👩‍💻", label: "Development", text: "Code assistance that never phones home with your proprietary source." },
-  { icon: "📚", label: "Education",    text: "Put AI in classrooms and low-bandwidth regions without cloud dependencies." },
-  { icon: "🏢", label: "Enterprise",   text: "Deploy to air-gapped infrastructure. Full performance, zero data egress." },
+const USE_CASES: { icon: IconName; label: string; text: string }[] = [
+  { icon: "flask", label: "Research", text: "Explore sensitive documents and data without exposing them to an external server." },
+  { icon: "plane", label: "On the move", text: "Bring full capability on a laptop in airplane mode. No connection required." },
+  { icon: "health", label: "Healthcare", text: "Keep patient records where they belong: inside your organization." },
+  { icon: "code", label: "Development", text: "Get thoughtful code assistance without sending proprietary source anywhere." },
+  { icon: "book", label: "Education", text: "Bring practical AI to classrooms and communities with limited connectivity." },
+  { icon: "building", label: "Enterprise", text: "Deploy to air-gapped environments. No data egress, by design." },
 ];
-
 const STATS = [
-  { value: "< 4 GB", label: "Model size" },
-  { value: "< 1 s",  label: "First-token latency" },
-  { value: "0",      label: "Network requests at inference" },
-  { value: "100%",   label: "On-device processing" },
+  { value: "< 4 GB", label: "Target model size" },
+  { value: "< 1 sec", label: "Prototype first token" },
+  { value: "0", label: "Inference network calls" },
+  { value: "100%", label: "On-device processing" },
 ];
-
-const H2 = "font-display text-[clamp(28px,4vw,48px)] font-light leading-[1.15]";
-const BTN =
-  "inline-block cursor-pointer rounded-md bg-ink px-[26px] py-[14px] text-[16px] font-medium leading-[normal] text-white transition-colors duration-150 hover:bg-signal motion-reduce:transition-none";
-const MOTION = "transition-colors duration-400 motion-reduce:transition-none";
-const CHIP_PSEUDO =
-  "before:absolute before:bottom-[12%] before:left-[-9px] before:top-[12%] before:w-[7px] before:bg-[repeating-linear-gradient(to_bottom,var(--color-ink)_0_2px,transparent_2px_7px)] before:content-[''] after:absolute after:bottom-[12%] after:right-[-9px] after:top-[12%] after:w-[7px] after:bg-[repeating-linear-gradient(to_bottom,var(--color-ink)_0_2px,transparent_2px_7px)] after:content-['']";
+const HEADING = "editorial-heading text-[clamp(32px,4.2vw,54px)]";
+const BUTTON = "button-primary";
 
 export default function LandingPage() {
-  const [small, setSmall] = useState(false);
+  const [small, setSmall] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { setSmall(true); return; }
-    const t = window.setTimeout(() => setSmall(true), 1600);
-    return () => window.clearTimeout(t);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setTimeout(() => setSmall(true), 1200);
+    return () => window.clearTimeout(timer);
   }, []);
 
-  function onSubmit(e: FormEvent) {
-    e.preventDefault();
+  function onSubmit(event: FormEvent) {
+    event.preventDefault();
     setSent(true);
   }
 
   return (
-    <Page title="Immersyn | Private AI that runs on your own device">
-
-      {/* ── Hero ── */}
-      <section className="py-[clamp(48px,9vw,120px)]">
-        <Container>
-          <div className="grid grid-cols-[1.05fr_1fr] items-center gap-[clamp(32px,6vw,96px)] max-[820px]:grid-cols-1">
-            <div>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-hair bg-wash px-4 py-2 text-[13px] font-medium text-graphite">
-                <span className="h-2 w-2 rounded-full bg-signal" />
-                Now in early development — join the waitlist
+    <Page title="Immersyn | Private AI, at home on your device">
+      <section className="hero-section relative overflow-hidden pb-20 pt-14 sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24">
+        <div className="hero-grain pointer-events-none absolute inset-0" aria-hidden="true" />
+        <Container className="relative">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_.98fr] lg:gap-16">
+            <div className="relative z-10">
+              <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-hair bg-white/70 px-3.5 py-2 text-[12px] font-medium text-graphite shadow-[0_2px_12px_rgba(23,25,24,.04)]">
+                <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal/40" /><span className="relative inline-flex h-2 w-2 rounded-full bg-signal" /></span>
+                Independent AI research · Early development
               </div>
-              <h1 className="mb-7 font-display text-[clamp(36px,5.6vw,68px)] font-light leading-[1.08] tracking-[-.01em]">
-                AI shouldn't need
-                <br />a data center.
+              <h1 className="editorial-heading mb-6 max-w-[680px] text-[clamp(48px,7.4vw,88px)]">
+                Intelligence,
+                <br />without the <span className="hero-italic">infrastructure.</span>
               </h1>
-              <p className="mb-5 font-display text-[clamp(18px,2vw,24px)] font-medium leading-[1.4]">
-                It shouldn't need permission, either.
+              <p className="mb-8 max-w-[470px] text-[17px] leading-[1.8] text-graphite sm:text-[18px]">
+                We make AI models small enough to run on the device in your hands. Private, offline, and built around you—not a data center.
               </p>
-              <p className="mb-9 max-w-[46ch] text-[18px] text-graphite">
-                Immersyn is an AI research lab making models small enough to run on your own
-                device — private, offline, and built for everyone.
-              </p>
-              <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
-                <a className={BTN} href="#access">Get early access</a>
-                <a className="text-ink underline-offset-[5px] hover:underline" href="#watch">
-                  Watch the 26-second intro
+              <div className="flex flex-wrap items-center gap-4">
+                <a className={BUTTON} href="#access">Get early access <Icon name="arrow-right" className="h-4 w-4" /></a>
+                <a className="inline-flex min-h-[50px] items-center gap-2 px-2 text-[14px] font-medium text-ink transition-colors hover:text-signal" href="#watch">
+                  See the idea <span className="grid h-7 w-7 place-items-center rounded-full border border-hair"><Icon name="arrow-right" className="h-3.5 w-3.5" /></span>
                 </a>
               </div>
+              <div className="mt-10 flex items-center gap-3 text-[12px] text-graphite">
+                <span className="flex -space-x-2">
+                  <span className="grid h-7 w-7 place-items-center rounded-full border-2 border-paper bg-[#e3e5e0]"><Icon name="lock" className="h-3.5 w-3.5" /></span>
+                  <span className="grid h-7 w-7 place-items-center rounded-full border-2 border-paper bg-[#e9eaf0]"><Icon name="globe" className="h-3.5 w-3.5" /></span>
+                </span>
+                Designed for privacy from the first prompt
+              </div>
             </div>
 
-            <div className="flex flex-col items-center gap-[18px]">
+            <div className="mx-auto flex w-full max-w-[590px] flex-col items-center gap-5">
               <button
                 type="button"
-                className="relative grid aspect-[28/14] w-full max-w-[520px] cursor-pointer place-items-center bg-transparent"
-                onClick={() => setSmall((s) => !s)}
+                className="model-illustration relative grid aspect-[2/1] w-full cursor-pointer place-items-center bg-transparent"
+                onClick={() => setSmall((value) => !value)}
                 aria-pressed={small}
-                aria-label={
-                  small
-                    ? "Showing a model on your device. Select to see it at data center size."
-                    : "Showing a data center sized model. Select to shrink it."
-                }
+                aria-label={small ? "Showing a model on your device. Select to see it at data center size." : "Showing a data center sized model. Select to shrink it."}
               >
-                <span
-                  className={`absolute h-[27%] w-[27%] rounded-[7px] border-2 border-ink transition-opacity delay-900 duration-600 motion-reduce:transition-none ${small ? "opacity-100" : "opacity-0"} ${CHIP_PSEUDO}`}
-                />
-                <span
-                  className={`grid aspect-[28/11] w-full grid-cols-[repeat(28,1fr)] transition-transform duration-1400 ease-[cubic-bezier(.65,0,.25,1)] motion-reduce:transition-none ${small ? "scale-[.2]" : "scale-100"}`}
-                >
-                  {DOTS.map((d) => (
-                    <i key={d} className="aspect-square w-[36%] self-center justify-self-center rounded-full bg-ink" />
-                  ))}
+                <span className={`model-device-chip pointer-events-none absolute h-[27%] w-[27%] rounded-[7px] border-2 border-ink transition-opacity delay-700 duration-500 motion-reduce:transition-none ${small ? "opacity-100" : "opacity-0"}`} />
+                <span className="model-particles grid aspect-[28/11] w-full grid-cols-[repeat(28,1fr)] transition-transform duration-1000 ease-[cubic-bezier(.65,0,.25,1)] motion-reduce:transition-none" style={{ transform: small ? "scale(.2)" : "scale(1)" }}>
+                  {DOTS.map((dot) => <i key={dot} className="model-particle" />)}
                 </span>
               </button>
-              <p className="flex gap-5 font-display text-[14px] font-medium leading-[normal] text-hair" aria-live="polite">
-                <span className={small ? MOTION : `${MOTION} text-ink`}>Data center</span>
-                <span className={small ? `${MOTION} text-ink` : MOTION}>Your device</span>
+              <p className="flex gap-5 font-mono text-[11px] uppercase tracking-[.12em]" aria-live="polite">
+                <span className={!small ? "text-ink" : "text-graphite/55"}>Data center</span>
+                <span className="text-graphite/40">/</span>
+                <span className={small ? "text-ink" : "text-graphite/55"}>Your device</span>
               </p>
             </div>
+          </div>
+          <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-hair pt-5 text-[11px] font-medium uppercase tracking-[.12em] text-graphite/80 sm:mt-20">
+            <span>Local-first intelligence</span><span className="hidden text-hair sm:block">/</span><span>Built for real hardware</span><span className="hidden text-hair sm:block">/</span><span>Privacy by architecture</span>
           </div>
         </Container>
       </section>
 
-      {/* ── Stats bar ── */}
-      <section className="border-y border-hair bg-ink py-10">
+      <section className="bg-ink py-9 sm:py-11">
         <Container>
-          <dl className="grid grid-cols-4 gap-8 max-[640px]:grid-cols-2">
-            {STATS.map((s) => (
-              <div key={s.label} className="text-center">
-                <dt className="mb-1 font-display text-[clamp(28px,3.5vw,40px)] font-light text-white">{s.value}</dt>
-                <dd className="text-[14px] text-[#9ba0aa]">{s.label}</dd>
-              </div>
-            ))}
+          <dl className="grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-4">
+            {STATS.map((stat) => <div key={stat.label} className="border-l border-white/15 pl-4 sm:pl-6"><dt className="font-display text-[clamp(25px,3vw,38px)] font-light tracking-[-.04em] text-white">{stat.value}</dt><dd className="mt-1 text-[12px] text-white/45">{stat.label}</dd></div>)}
           </dl>
         </Container>
       </section>
 
-      {/* ── Why small ── */}
-      <section id="why" className="bg-wash py-[clamp(56px,8vw,112px)]">
+      <section id="why" className="section-space">
         <Container>
-          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
-            <h2 className={H2}>So we're making it small.</h2>
-            <Link to="/about" className="text-[15px] text-graphite underline-offset-[5px] hover:text-ink hover:underline">
-              Read more about us →
-            </Link>
+          <div className="mb-12 grid items-end gap-5 sm:mb-16 sm:grid-cols-[1fr_auto]">
+            <div><p className="section-kicker mb-5">A different kind of AI</p><h2 className={`${HEADING} max-w-[620px]`}>The best technology feels like it belongs to you.</h2></div>
+            <Link to="/about" className="group inline-flex items-center gap-2 pb-1 text-[13px] font-medium text-graphite transition-colors hover:text-signal">Meet the team <Icon name="arrow-up-right" className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link>
           </div>
-          <div className="grid grid-cols-3 gap-[clamp(24px,4vw,64px)] max-[820px]:grid-cols-1">
-            {PRINCIPLES.map((p) => (
-              <article key={p.title} className="border-t-2 border-ink pt-5">
-                <h3 className="mb-3 font-display text-[22px] font-medium uppercase tracking-[.14em]">{p.title}</h3>
-                <p className="max-w-[34ch] text-graphite">{p.body}</p>
-              </article>
-            ))}
+          <div className="grid gap-5 md:grid-cols-3">
+            {PRINCIPLES.map((item) => <article key={item.number} className="principle-card"><span className="font-mono text-[11px] text-signal">{item.number} / 03</span><div className="mt-9 h-px w-10 bg-signal/45" /><h3 className="mt-5 font-display text-[21px] font-medium tracking-[-.025em]">{item.title}</h3><p className="mt-3 max-w-[34ch] text-[14px] leading-[1.8] text-graphite">{item.body}</p></article>)}
           </div>
         </Container>
       </section>
 
-      {/* ── How it works ── */}
-      <section className="py-[clamp(56px,8vw,112px)]">
+      <section className="section-space bg-[#efefeb]">
         <Container>
-          <h2 className={`${H2} mb-4`}>How it works.</h2>
-          <p className="mb-12 max-w-[52ch] text-[18px] text-graphite">
-            No cloud account. No subscription. No data leaving your machine. Just a model
-            that runs where you are.
-          </p>
-          <div className="grid grid-cols-3 gap-[clamp(24px,4vw,64px)] max-[820px]:grid-cols-1">
-            {STEPS.map((step) => (
-              <div key={step.num} className="flex flex-col gap-4">
-                <span className="font-display text-[14px] font-semibold tracking-[.2em] text-graphite">{step.num}</span>
-                <div className="h-px w-full bg-hair" />
-                <h3 className="font-display text-[22px] font-medium leading-[1.3]">{step.title}</h3>
-                <p className="max-w-[34ch] text-graphite">{step.body}</p>
-              </div>
-            ))}
+          <div className="grid items-start gap-12 lg:grid-cols-[.85fr_1.15fr] lg:gap-20">
+            <div className="lg:sticky lg:top-32"><p className="section-kicker mb-5">A simpler way to work</p><h2 className={`${HEADING} max-w-[450px]`}>Powerful tools. No strings attached.</h2><p className="mt-5 max-w-[40ch] text-[15px] leading-[1.8] text-graphite">No cloud account. No subscription required to think. Just capable models that show up wherever you do.</p></div>
+            <div className="divide-y divide-hair border-y border-hair">
+              {STEPS.map((step) => <article key={step.num} className="grid gap-3 py-7 sm:grid-cols-[64px_1fr] sm:gap-5 sm:py-9"><span className="font-mono text-[11px] text-signal">{step.num}</span><div><h3 className="font-display text-[20px] font-medium tracking-[-.025em]">{step.title}</h3><p className="mt-2 max-w-[46ch] text-[14px] leading-[1.8] text-graphite">{step.body}</p></div></article>)}
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* ── Use cases ── */}
-      <section className="bg-wash py-[clamp(56px,8vw,112px)]">
+      <section className="section-space">
         <Container>
-          <h2 className={`${H2} mb-4`}>Who it's for.</h2>
-          <p className="mb-12 max-w-[52ch] text-[18px] text-graphite">
-            If the work is sensitive, the connection is unreliable, or the data must stay
-            put — Immersyn was designed for you.
-          </p>
-          <div className="grid grid-cols-3 gap-5 max-[820px]:grid-cols-2 max-[500px]:grid-cols-1">
-            {USE_CASES.map((u) => (
-              <article
-                key={u.label}
-                className="rounded-xl border border-hair bg-paper p-6 transition-shadow duration-150 hover:shadow-md"
-              >
-                <span className="mb-4 block text-[32px] leading-none">{u.icon}</span>
-                <h3 className="mb-2 font-display text-[18px] font-semibold">{u.label}</h3>
-                <p className="text-[15px] text-graphite">{u.text}</p>
-              </article>
-            ))}
+          <div className="mb-12 max-w-[680px] sm:mb-14"><p className="section-kicker mb-5">Made to go where you go</p><h2 className={`${HEADING} max-w-[600px]`}>Good technology adapts to the work.</h2><p className="mt-4 max-w-[48ch] text-[15px] leading-[1.8] text-graphite">For sensitive work, unpredictable connections, and information that should stay put.</p></div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {USE_CASES.map((item, index) => <article key={item.label} className="usecase-card group" style={{ animationDelay: `${index * 60}ms` }}><span className="grid h-10 w-10 place-items-center rounded-md border border-hair bg-paper text-ink transition-colors group-hover:border-signal/30 group-hover:bg-signal/5 group-hover:text-signal"><Icon name={item.icon} className="h-[19px] w-[19px]" /></span><div className="mt-8"><h3 className="font-display text-[17px] font-medium">{item.label}</h3><p className="mt-2 text-[13px] leading-[1.75] text-graphite">{item.text}</p></div><Icon name="arrow-up-right" className="absolute right-5 top-5 h-4 w-4 text-graphite/50 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-signal" /></article>)}
           </div>
         </Container>
       </section>
 
-      {/* ── Watch ── */}
-      <section id="watch" className="py-[clamp(56px,8vw,112px)]">
+      <section id="watch" className="pb-20 sm:pb-28">
         <Container>
-          <div className="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-            <h2 className={H2}>Built for everyone.</h2>
-            <p className="text-graphite">The idea in 26 seconds.</p>
+          <div className="relative overflow-hidden rounded-[10px] bg-[#171a1a] p-6 text-white sm:p-10 lg:p-14">
+            <div className="video-glow pointer-events-none absolute -right-10 -top-36 h-[390px] w-[390px] rounded-full" />
+            <div className="relative z-10 mb-8 flex flex-wrap items-end justify-between gap-5"><div><p className="mb-4 font-mono text-[10px] uppercase tracking-[.16em] text-[#a9baff]">A note from our lab</p><h2 className="editorial-heading text-[clamp(28px,4vw,46px)]">A different future for AI.</h2></div><p className="text-[13px] text-white/50">The idea, in 26 seconds.</p></div>
+            <video controls preload="metadata" playsInline src="/immersyn_intro_720p.mp4" aria-label="Immersyn intro: AI shouldn't need a data center" className="relative z-10 block aspect-video w-full rounded-md border border-white/10 bg-black" />
           </div>
-          <video
-            controls
-            preload="metadata"
-            playsInline
-            src="/immersyn_intro_720p.mp4"
-            aria-label="Immersyn intro: AI shouldn't need a data center"
-            className="block aspect-video w-full rounded-[10px] bg-black"
-          />
         </Container>
       </section>
 
-      {/* ── Waitlist ── */}
-      <section id="access" className="border-t border-hair bg-ink py-[clamp(56px,8vw,112px)]">
-        <Container>
-          <div className="mx-auto max-w-[600px] text-center">
-            <h2 className="mb-4 font-display text-[clamp(28px,4vw,48px)] font-light leading-[1.15] text-white">
-              Run AI on your own terms.
-            </h2>
-            <p className="mb-10 text-[18px] text-[#9ba0aa]">
-              Leave your email and we'll tell you when Immersyn is ready to try. No spam,
-              no selling your address — just one message when it's time.
-            </p>
+      <section id="access" className="waitlist-section relative overflow-hidden border-t border-hair py-20 sm:py-28">
+        <div className="waitlist-decoration pointer-events-none absolute inset-0" aria-hidden="true" />
+        <Container className="relative">
+          <div className="mx-auto max-w-[650px] text-center">
+            <p className="section-kicker mb-5">A seat at the table</p>
+            <h2 className="editorial-heading text-[clamp(35px,5.5vw,62px)]">The next chapter is <span className="hero-italic">closer than you think.</span></h2>
+            <p className="mx-auto mt-5 max-w-[480px] text-[15px] leading-[1.8] text-graphite">Join the early access list. One note when Immersyn is ready to try—nothing more.</p>
             {sent ? (
-              <p className="font-medium text-white" role="status">
-                You're on the list. We'll write to{" "}
-                <span className="text-signal">{email}</span>.
-              </p>
+              <p className="mx-auto mt-8 inline-flex items-center gap-2 rounded-md border border-[#bad9c4] bg-[#eef6ef] px-5 py-4 text-left text-[14px] text-ink" role="status"><Icon name="check" className="h-5 w-5 text-[#358554]" /><span>You're on the list. We'll write to <strong>{email}</strong>.</span></p>
             ) : (
-              <form onSubmit={onSubmit} className="flex flex-col items-center gap-4">
+              <form onSubmit={onSubmit} className="mx-auto mt-8 max-w-[500px]">
                 <label htmlFor="email" className="sr-only">Email address</label>
-                <div className="flex w-full max-w-[520px] flex-wrap gap-3">
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="grow shrink basis-[220px] rounded-md border border-[#3a3d47] bg-[#22242a] px-4 py-[14px] text-[16px] leading-[normal] text-white placeholder:text-[#5a5e66] focus:outline-none focus:ring-2 focus:ring-signal"
-                  />
-                  <button className={BTN} type="submit">Get early access</button>
-                </div>
-                <p className="text-[13px] text-[#5a5e66]">
-                  We collect only your email, used only to notify you. No trackers.
-                </p>
+                <div className="flex flex-col gap-2.5 sm:flex-row"><input id="email" type="email" required autoComplete="email" placeholder="Your email address" value={email} onChange={(event) => setEmail(event.target.value)} className="min-h-[52px] min-w-0 grow rounded-md border border-hair bg-white px-4 text-[14px] text-ink placeholder:text-graphite/60 focus:border-signal focus:outline-none focus:ring-2 focus:ring-signal/15" /><button className={`${BUTTON} shrink-0`} type="submit">Join the waitlist <Icon name="arrow-right" className="h-4 w-4" /></button></div>
+                <p className="mt-3 text-left text-[11px] text-graphite/80 sm:text-center">No spam. No selling your address. Unsubscribe at any time.</p>
               </form>
             )}
           </div>
         </Container>
       </section>
-
     </Page>
   );
 }
