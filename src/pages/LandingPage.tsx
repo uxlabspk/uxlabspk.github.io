@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Page } from "../components/Page";
 import { Container } from "../components/Container";
@@ -31,22 +31,18 @@ const STATS = [
 ];
 const HEADING = "editorial-heading text-[clamp(32px,4.2vw,54px)]";
 const BUTTON = "button-primary";
+const BUTTONDOWN_USERNAME = import.meta.env.VITE_BUTTONDOWN_USERNAME;
+const BUTTONDOWN_ACTION = BUTTONDOWN_USERNAME
+  ? `https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`
+  : undefined;
 
 export default function LandingPage() {
   const [small, setSmall] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setTimeout(() => setSmall(true), 1200);
     return () => window.clearTimeout(timer);
   }, []);
-
-  function onSubmit(event: FormEvent) {
-    event.preventDefault();
-    setSent(true);
-  }
 
   return (
     <Page title="Immersyn | Private AI, at home on your device">
@@ -164,14 +160,18 @@ export default function LandingPage() {
             <p className="section-kicker mb-5">A seat at the table</p>
             <h2 className="editorial-heading text-[clamp(35px,5.5vw,62px)]">The next chapter is <span className="hero-italic">closer than you think.</span></h2>
             <p className="mx-auto mt-5 max-w-[480px] text-[15px] leading-[1.8] text-graphite">Join the early access list. One note when Immersyn is ready to try—nothing more.</p>
-            {sent ? (
-              <p className="mx-auto mt-8 inline-flex items-center gap-2 rounded-md border border-[#bad9c4] bg-[#eef6ef] px-5 py-4 text-left text-[14px] text-ink" role="status"><Icon name="check" className="h-5 w-5 text-[#358554]" /><span>You're on the list. We'll write to <strong>{email}</strong>.</span></p>
-            ) : (
-              <form onSubmit={onSubmit} className="mx-auto mt-8 max-w-[500px]">
+            {BUTTONDOWN_ACTION ? (
+              <form action={BUTTONDOWN_ACTION} method="post" className="mx-auto mt-8 max-w-[500px]">
                 <label htmlFor="email" className="sr-only">Email address</label>
-                <div className="flex flex-col gap-2.5 sm:flex-row"><input id="email" type="email" required autoComplete="email" placeholder="Your email address" value={email} onChange={(event) => setEmail(event.target.value)} className="min-h-[52px] min-w-0 grow rounded-md border border-hair bg-white px-4 text-[14px] text-ink placeholder:text-graphite/60 focus:border-signal focus:outline-none focus:ring-2 focus:ring-signal/15" /><button className={`${BUTTON} shrink-0`} type="submit">Join the waitlist <Icon name="arrow-right" className="h-4 w-4" /></button></div>
-                <p className="mt-3 text-left text-[11px] text-graphite/80 sm:text-center">No spam. No selling your address. Unsubscribe at any time.</p>
+                <input type="hidden" name="embed" value="1" />
+                <input type="hidden" name="tag" value="early-access" />
+                <div className="flex flex-col gap-2.5 sm:flex-row"><input id="email" name="email" type="email" required autoComplete="email" placeholder="Your email address" className="min-h-[52px] min-w-0 grow rounded-md border border-hair bg-white px-4 text-[14px] text-ink placeholder:text-graphite/60 focus:border-signal focus:outline-none focus:ring-2 focus:ring-signal/15" /><button className={`${BUTTON} shrink-0`} type="submit">Join the waitlist <Icon name="arrow-right" className="h-4 w-4" /></button></div>
+                <p className="mt-3 text-left text-[11px] text-graphite/80 sm:text-center">We’ll open Buttondown’s confirmation page to finish your signup. No spam; unsubscribe any time.</p>
               </form>
+            ) : (
+              <p className="mx-auto mt-8 max-w-[470px] rounded-md border border-hair bg-white/70 px-5 py-4 text-[13px] leading-[1.7] text-graphite" role="status">
+                The waitlist is being set up. In the meantime, <a className="font-medium text-ink underline decoration-hair underline-offset-4 hover:decoration-signal" href="mailto:hello@immersyn.ai">email us</a> and we’ll let you know when early access opens.
+              </p>
             )}
           </div>
         </Container>

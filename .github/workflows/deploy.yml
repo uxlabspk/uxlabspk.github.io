@@ -16,6 +16,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VITE_BUTTONDOWN_USERNAME: ${{ vars.BUTTONDOWN_USERNAME }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
